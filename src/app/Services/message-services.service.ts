@@ -9,7 +9,7 @@ export class MessageServicesService {
 
   constructor(private http: HttpClient) { }
 
-  readonly baseURL = 'http://localhost:4000/message';
+  readonly baseURL = 'https://message-app-heroku.herokuapp.com/message';
   formData: Message = new Message();
   list: Message[];
   user: string;
