@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "messageapp-9c8ca": {
+      "hosting": {
+        "AngularMessageApp": [
+          "messageapp-9c8ca"
+        ]
+      }
+    }
+  }
+}

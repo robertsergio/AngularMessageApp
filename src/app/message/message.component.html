@@ -1,0 +1,139 @@
+
+<div class="container">
+    <div class="jumbotron py-3">
+      <h1 class="display-4 text-center">
+        User Messages
+      </h1>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <div class="border">
+          <button class="btn btn-md btn-outline-primary" (click)="open(content)">
+            <i class="fa fa-user"></i>New Message</button>
+        </div>
+      </div>
+          <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Message ID</th>
+                    <th>Sender</th>
+                    <th>Receiver</th>
+                    <th>Message</th>
+                    <th>Sent</th>
+                    <th>Seen</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let pd of service.list">
+                    <td (click)="populateForm(pd)">{{pd.messageId}}</td>
+                    <td (click)="populateForm(pd)">{{pd.sender.name}}</td>
+                    <td (click)="populateForm(pd)">{{pd.receiver.name}}</td>
+                    <td (click)="populateForm(pd)">{{pd.message}}</td>
+                    <td (click)="populateForm(pd)">{{pd.sent | date:'dd/MM/yyyy H:m:s'}}</td>
+                    <td (click)="populateForm(pd)">{{pd.seen | date: 'dd/MM/yyyy H:m:s'}}</td>
+                    <td>
+                        <button class="btn btn-sm btn-info"
+                        (click)="onView(pd.messageId, contentview)">
+                          <i class="fa fa-search"></i>View</button>
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </div>
+  
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">New Message</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #f="ngForm" id="mform" name="mform" (ngSubmit)="onSubmit(f)" novalidate>
+        <input type="hidden" name="messageId" 
+            [value]="service.formData.messageId"/>
+        <div class="form-group">
+          <label for="sender">Sender</label>
+          <div class="input-group">
+            <input id="sender" name="sender" class="form-control" ngModel
+            [(ngModel)]="this.name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="receiver">Receiver</label>
+          <div class="input-group">
+            <input id="receiver" name="receiver" class="form-control" ngModel>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <div class="input-group">
+            <input id="message" name="message" class="form-control" ngModel>
+          </div>
+        </div>
+        <div class="border text-center">
+          <button data-dismiss="modal" class="btn btn-info">Submit</button>
+          <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+        </div>  
+      </form>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </ng-template>
+
+  <ng-template #contentview let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">View Message</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="view-id">ID</label>
+          <div class="input-group">
+            <input disabled id="view-id" name="messageId" class="form-control" [(ngModel)]="currentMessage.messageId"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="view-sender">Sender</label>
+          <div class="input-group">
+            <input disabled id="view-sender" name="sender" class="form-control" [(ngModel)]="currentMessage.sender.name"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="view-receiver">Receiver</label>
+          <div class="input-group">
+            <input disabled id="view-receiver" name="receiver" class="form-control" [(ngModel)]="currentMessage.receiver.name"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="view-message">Message</label>
+          <div class="input-group">
+            <input disabled id="view-message" name="message" class="form-control" [(ngModel)]="currentMessage.message"/>
+          </div>
+        </div>  
+        <div class="form-group">
+          <label for="view-sent">Sent</label>
+          <div class="input-group">
+            <input disabled id="view-sent" name="sent" class="form-control" [(ngModel)]="currentMessage.sent"/>
+          </div>
+        </div> 
+        <div class="form-group">
+          <label for="view-seen">Seen</label>
+          <div class="input-group">
+            <input disabled id="view-seen"  name="seen" class="form-control" [(ngModel)]="currentMessage.seen"/>
+          </div>
+        </div> 
+      </form>
+    </div>
+    <div class="modal-footer">
+      <div class="border text-center">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+      </div>
+    </div>
+  </ng-template>
